@@ -5,7 +5,7 @@ import {styles} from './DetailScreen.styles';
 import {DetailScreenProps} from './DetailScreen.types';
 import CryptoService from '../../services/CryptoServices';
 
-export const DetailScreen: React.FC<DetailScreenProps> = ({route}) => {
+const DetailScreen: React.FC<DetailScreenProps> = ({route}) => {
   // Extract cryptocurrency ID from route params
   const {cryptoId} = route.params;
 
@@ -32,6 +32,7 @@ export const DetailScreen: React.FC<DetailScreenProps> = ({route}) => {
     return (
       <View style={styles.centered}>
         <ActivityIndicator
+          testID="loading-indicator"
           size="large"
           accessibilityLabel="Loading cryptocurrency details"
         />
@@ -42,7 +43,9 @@ export const DetailScreen: React.FC<DetailScreenProps> = ({route}) => {
   if (!crypto) {
     return (
       <View style={styles.centered}>
-        <Text accessibilityLabel="No cryptocurrency data available">
+        <Text
+          accessibilityLabel="No cryptocurrency data available"
+          testID="error-message">
           No data available
         </Text>
       </View>
@@ -75,6 +78,7 @@ export const DetailScreen: React.FC<DetailScreenProps> = ({route}) => {
         <View style={styles.infoRow}>
           <Text style={styles.label}>24h Change:</Text>
           <Text
+            testID="price-change"
             style={[
               styles.value,
               parseFloat(crypto.percent_change_24h) > 0
@@ -101,3 +105,4 @@ export const DetailScreen: React.FC<DetailScreenProps> = ({route}) => {
     </ScrollView>
   );
 };
+export default DetailScreen;

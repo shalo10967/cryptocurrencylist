@@ -46,7 +46,9 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
   };
   //Renders individual cryptocurrency list items
   const renderItem = ({item}: {item: Cryptocurrency}) => (
-    <CryptoListItem item={item} navigation={navigation} />
+    <View testID="crypto-list-item">
+      <CryptoListItem item={item} navigation={navigation} />
+    </View>
   );
 
   // Loading state
@@ -54,6 +56,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
     return (
       <View style={styles.centered}>
         <ActivityIndicator
+          testID="loading-indicator"
           size="large"
           accessibilityLabel="Loading cryptocurrencies"
         />
@@ -64,6 +67,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
   return (
     <View style={styles.container}>
       <TextInput
+        testID="search-input"
         style={styles.searchInput}
         placeholder="Search Crtypos.."
         value={searchCryptoText}
