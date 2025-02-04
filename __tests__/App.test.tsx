@@ -1,21 +1,42 @@
 import React from 'react';
 import {render} from '@testing-library/react-native';
-import App from '../App';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {DetailScreen, HomeScreen} from '../src/screens';
+import {RootStackParamList} from '../src/types';
 
-// Mock NavigationContainer
-jest.mock('@react-navigation/native', () => ({
-  NavigationContainer: jest.fn(({children}) => children),
-}));
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
-// Mock screens
-jest.mock('../src/screens', () => ({
-  HomeScreen: () => null,
-  DetailScreen: () => null,
-}));
+describe('App Navigation', () => {
+  test('renders home screen correctly', () => {
+    const {getByText} = render(
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{title: 'Crypto List'}}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>,
+    );
 
-describe('App Component', () => {
-  it('renders navigation structure', () => {
-    const {toJSON} = render(<App />);
-    expect(toJSON()).toMatchSnapshot();
+    expect(getByText('Crypto List')).toBeTruthy();
+  });
+
+  test('renders detail screen correctly', () => {
+    const {getByText} = render(
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Detail"
+            component={DetailScreen}
+            options={{title: 'Crypto Detail'}}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>,
+    );
+
+    expect(getByText('Crypto Detail')).toBeTruthy();
   });
 });
